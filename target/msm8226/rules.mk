@@ -44,3 +44,5 @@ OBJS += \
     $(LOCAL_DIR)/meminfo.o \
     $(LOCAL_DIR)/target_display.o \
     $(LOCAL_DIR)/oem_panel.o
+
+CFLAGS += -Wno-missing-field-initializers -Wno-unused-variable
