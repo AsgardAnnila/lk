@@ -283,6 +283,29 @@ bool bootstrap_elf64(void)
     memmove((void*) (addr_t) fd_entry_point, image_addr, load_section_length_actual);
     dprintf(ALWAYS, "UEFI FD ready.\n");
 
+#if defined(UEFI_VARIABLE_SVC_ADDR) && defined(UEFI_VARIABLE_SVC_SIZE)
+    dprintf(ALWAYS, "Load UEFI variable storage.\n");
+
+	/* Read UEFI variable storage */
+	boot_partition_index = partition_get_index("uefi_vars");
+	boot_partition_offset = partition_get_offset(boot_partition_index);
+	if (boot_partition_offset == 0)
+	{
+		dprintf(CRITICAL, "UEFI Variable Services: Storage area not found, variable svc won't function\n");
+	}
+	else
+	{
+		/* Read Variable Svc Storage */
+		if (mmc_read(boot_partition_offset, (uint32_t *) UEFI_VARIABLE_SVC_ADDR, UEFI_VARIABLE_SVC_SIZE / page_size))
+		{
+			dprintf(CRITICAL, "UEFI Variable Services: Storage area read failed\n");
+			goto exit;
+		}
+	}
+
+    dprintf(ALWAYS, "UEFI variable ready.\n");
+#endif
+
     /* Launch FD */
 
     /* Perform target specific cleanup */
