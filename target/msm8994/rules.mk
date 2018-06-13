@@ -22,7 +22,7 @@ UEFI_FB_SIZE := 0x00800000
 UEFI_FB_HORZ := 1080
 UEFI_FB_VERT := 1920
 
-UEFI_VARIABLE_SVC_ADDR := 0x80000000 # Synchronize the change in corresponding DSC file
+UEFI_VARIABLE_SVC_ADDR := 0x90000000 # Scratch area. Synchronize the change in corresponding DSC file
 UEFI_VARIABLE_SVC_SIZE := 0x200000   # Synchronize the change in corresponding DSC file
 
 DEFINES += DISPLAY_SPLASH_SCREEN=1
